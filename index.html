@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dripzy</title>
+
+<style>
+body { margin:0; font-family: Arial; background:#f5f5f5; }
+
+header {
+    background:black;
+    color:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+}
+
+nav a {
+    color:white;
+    margin-left:15px;
+    text-decoration:none;
+}
+
+.hero {
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.products {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap:20px;
+    padding:20px;
+}
+
+.card {
+    background:white;
+    padding:15px;
+    text-align:center;
+}
+
+button {
+    background:black;
+    color:white;
+    padding:10px;
+    border:none;
+    cursor:pointer;
+    width:100%;
+}
+
+.cart {
+    position:fixed;
+    top:10px;
+    right:10px;
+    background:white;
+    padding:10px;
+}
+
+footer {
+    background:black;
+    color:white;
+    text-align:center;
+    padding:10px;
+}
+
+input {
+    padding:8px;
+    width:220px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>DRIPZY</h2>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <h1>Wear Your Vibe</h1>
+    <p>Streetwear for Every Style</p>
+</div>
+
+<div class="cart">
+🛒 <span id="cart-count">0</span> | ₹<span id="total">0</span>
+</div>
+
+<section class="products">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab" width="100%">
+<h3>Oversized T-Shirt</h3>
+<p>₹499</p>
+<select id="s1"><option>S</option><option>M</option><option>L</option></select><br><br>
+<button onclick="addToCart(499,'s1')">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf" width="100%">
+<h3>Hoodie</h3>
+<p>₹999</p>
+<select id="s2"><option>S</option><option>M</option><option>L</option></select><br><br>
+<button onclick="addToCart(999,'s2')">Add to Cart</button>
+</div>
+
+</section>
+
+<!-- CUSTOMER FORM -->
+<div style="text-align:center; margin:20px;">
+<h3>Enter Your Details</h3>
+<input type="text" id="name" placeholder="Your Name"><br><br>
+<input type="text" id="phoneInput" placeholder="Your Phone"><br><br>
+<input type="text" id="address" placeholder="Your Address"><br><br>
+</div>
+
+<!-- WHATSAPP ORDER BUTTON -->
+<div style="text-align:center; margin:20px;">
+<button onclick="orderNow()" style="background:green;">
+Order on WhatsApp
+</button>
+</div>
+
+<footer>
+<p>© 2026 Dripzy</p>
+</footer>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(price, sizeId){
+    let size = document.getElementById(sizeId).value;
+    cart.push({price, size});
+    total += price;
+
+    document.getElementById("cart-count").innerText = cart.length;
+    document.getElementById("total").innerText = total;
+}
+
+function orderNow(){
+    let name = document.getElementById("name").value;
+    let phoneInput = document.getElementById("phoneInput").value;
+    let address = document.getElementById("address").value;
+
+    if(cart.length === 0){
+        alert("Cart is empty");
+        return;
+    }
+
+    if(name === "" || phoneInput === "" || address === ""){
+        alert("Please fill all details");
+        return;
+    }
+
+    let msg = "Order Details:%0A";
+    msg += "Name: " + name + "%0A";
+    msg += "Phone: " + phoneInput + "%0A";
+    msg += "Address: " + address + "%0A%0A";
+
+    cart.forEach((item,i)=>{
+        msg += (i+1)+". Size:"+item.size+" ₹"+item.price+"%0A";
+    });
+
+    msg += "Total ₹"+total;
+
+    let phone = "916264263522"; // ✅ YOUR NUMBER ADDED
+
+    window.open("https://wa.me/"+phone+"?text="+msg);
+}
+</script>
+
+</body>
+</html>
